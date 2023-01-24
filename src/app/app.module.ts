@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { PasswordGeneratorComponent } from './password-generator/password-generator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [AppComponent, PasswordGeneratorComponent],
@@ -16,6 +18,8 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    MatIconModule,
+    ClipboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
