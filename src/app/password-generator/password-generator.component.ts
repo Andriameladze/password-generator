@@ -14,11 +14,14 @@ export class PasswordGeneratorComponent {
   numbersChecked = false;
   symbolsChecked = false;
 
+  passStrength = 0;
+
   characterValue(event: any) {
     this.charLength = Number(event.target.value);
   }
 
   checkboxCheck(event: any) {
+    this.passStrength = 0;
     let value = event.target.value;
     switch (value) {
       case 'lowercase':
@@ -34,6 +37,21 @@ export class PasswordGeneratorComponent {
         this.symbolsChecked = event.target.checked;
         break;
     }
+
+    let checkboxArr = [
+      this.lowercaseChecked,
+      this.uppercaseChecked,
+      this.numbersChecked,
+      this.symbolsChecked,
+    ];
+    let counter = 0;
+
+    for (let i = 0; i < checkboxArr.length; i++) {
+      if (checkboxArr[i] == true) {
+        counter++;
+      }
+    }
+    this.passStrength = counter;
   }
 
   generatePassword(passwordLength: number) {
