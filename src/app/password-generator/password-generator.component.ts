@@ -7,28 +7,12 @@ import { Component } from '@angular/core';
 })
 export class PasswordGeneratorComponent {
   password = '';
-  charLength = 1;
+  charLength = 6;
   checked = 5;
   uppercaseChecked = false;
   lowercaseChecked = false;
   numbersChecked = false;
   symbolsChecked = false;
-
-  uppercaseCheck(event: any): void {
-    this.uppercaseChecked = event.target.checked;
-  }
-
-  lowercaseCheck(event: any): void {
-    this.lowercaseChecked = event.target.checked;
-  }
-
-  numbersCheck(event: any): void {
-    this.numbersChecked = event.target.checked;
-  }
-
-  symbolsCheck(event: any): void {
-    this.symbolsChecked = event.target.checked;
-  }
 
   characterValue(event: any) {
     this.charLength = Number(event.target.value);
@@ -36,12 +20,6 @@ export class PasswordGeneratorComponent {
 
   checkboxCheck(event: any) {
     let value = event.target.value;
-    // if (event.target.value == 'lowercase') {
-    //   this.lowercaseChecked = event.target.checked;
-    // } else if (event.target.value == 'uppercase') {
-    //   this.uppercaseChecked = event.target.checked;
-    // }
-
     switch (value) {
       case 'lowercase':
         this.lowercaseChecked = event.target.checked;
@@ -67,11 +45,66 @@ export class PasswordGeneratorComponent {
     let allChars = numberChars + upperChars + lowerChars + symbolChars;
     let randPasswordArray = Array(passwordLength);
 
-    // randPasswordArray[1] = lowerChars;
-    // randPasswordArray[2] = numberChars;
-    // randPasswordArray[3] = symbolChars;
-
-    if (this.uppercaseChecked) {
+    if (
+      this.uppercaseChecked &&
+      this.lowercaseChecked &&
+      this.numbersChecked &&
+      this.symbolsChecked
+    ) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = lowerChars;
+      randPasswordArray[2] = numberChars;
+      randPasswordArray[3] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(allChars, 4);
+    } else if (
+      this.uppercaseChecked &&
+      this.lowercaseChecked &&
+      this.numbersChecked
+    ) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = lowerChars;
+      randPasswordArray[2] = numberChars;
+      randPasswordArray = randPasswordArray.fill(
+        upperChars + lowerChars + numberChars,
+        3
+      );
+    } else if (
+      this.uppercaseChecked &&
+      this.lowercaseChecked &&
+      this.symbolsChecked
+    ) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = lowerChars;
+      randPasswordArray[2] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(
+        upperChars + lowerChars + symbolChars,
+        3
+      );
+    } else if (this.uppercaseChecked && this.lowercaseChecked) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = lowerChars;
+      randPasswordArray = randPasswordArray.fill(upperChars + lowerChars, 2);
+    } else if (this.uppercaseChecked && this.numbersChecked) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = numberChars;
+      randPasswordArray = randPasswordArray.fill(upperChars + numberChars, 2);
+    } else if (this.uppercaseChecked && this.symbolsChecked) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(upperChars + symbolChars, 2);
+    } else if (this.lowercaseChecked && this.numbersChecked) {
+      randPasswordArray[0] = lowerChars;
+      randPasswordArray[1] = numberChars;
+      randPasswordArray = randPasswordArray.fill(lowerChars + numberChars, 2);
+    } else if (this.lowercaseChecked && this.symbolsChecked) {
+      randPasswordArray[0] = lowerChars;
+      randPasswordArray[1] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(lowerChars + symbolChars, 2);
+    } else if (this.numbersChecked && this.symbolsChecked) {
+      randPasswordArray[0] = numberChars;
+      randPasswordArray[1] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(numberChars + symbolChars, 2);
+    } else if (this.uppercaseChecked) {
       randPasswordArray[0] = upperChars;
       randPasswordArray = randPasswordArray.fill(upperChars, 1);
     } else if (this.lowercaseChecked) {
@@ -84,8 +117,6 @@ export class PasswordGeneratorComponent {
       randPasswordArray[0] = symbolChars;
       randPasswordArray = randPasswordArray.fill(symbolChars, 1);
     }
-
-    randPasswordArray = randPasswordArray.fill(allChars, 4);
 
     this.password = this.shuffleArray(
       randPasswordArray.map(function (x) {
