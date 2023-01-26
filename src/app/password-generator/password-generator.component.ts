@@ -98,6 +98,30 @@ export class PasswordGeneratorComponent {
         upperChars + lowerChars + symbolChars,
         3
       );
+    } else if (
+      this.uppercaseChecked &&
+      this.numbersChecked &&
+      this.symbolsChecked
+    ) {
+      randPasswordArray[0] = upperChars;
+      randPasswordArray[1] = numberChars;
+      randPasswordArray[2] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(
+        upperChars + numberChars + symbolChars,
+        3
+      );
+    } else if (
+      this.lowercaseChecked &&
+      this.numbersChecked &&
+      this.symbolsChecked
+    ) {
+      randPasswordArray[0] = lowerChars;
+      randPasswordArray[1] = numberChars;
+      randPasswordArray[2] = symbolChars;
+      randPasswordArray = randPasswordArray.fill(
+        lowerChars + numberChars + symbolChars,
+        3
+      );
     } else if (this.uppercaseChecked && this.lowercaseChecked) {
       randPasswordArray[0] = upperChars;
       randPasswordArray[1] = lowerChars;
